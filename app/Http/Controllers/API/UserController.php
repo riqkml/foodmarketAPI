@@ -55,7 +55,7 @@ class UserController extends Controller
         }
     }
 
-    public function register(Request $request)
+    public function register (Request $request)
     {
         try{
             $request->validate([
@@ -90,5 +90,12 @@ class UserController extends Controller
                 'error' => $error
             ],'Authentication Failed',500);
         }
+    }
+
+    public function logout (Request $request)
+    {
+        $token = $request->user()->currentAccessToken()->delete();
+
+        return ResponseFormatter::success($token, 'Token Revoked');
     }
 }
